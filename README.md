@@ -43,15 +43,7 @@ To run this project locally, follow these steps:
 - **Editing Books**: Click on the "Edit" button next to a book to update its details.
 - **Deleting Books**: Click on the "Delete" button next to a book to remove it from the list.
 
-## Screenshots
 
-### Adding a New Book
-
-![Add Book Form](1.png)
-
-### Editing a book
-
-![Book List](2.png)
 
 
 
