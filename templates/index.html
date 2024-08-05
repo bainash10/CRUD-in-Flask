@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List by Nischal Baidar</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Add a New Book</h1>
+    <form action="{{ url_for('index') }}" method="post" class="mb-4">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" id="author" name="author" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Book</button>
+    </form>
+
+    <h1 class="mb-4">Book List</h1>
+    <form class="form-inline mb-3">
+        <input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    </form>
+    <ul id="book-list" class="list-group">
+        <!-- Book list will be populated here by JavaScript -->
+    </ul>
+
+    <p id="no-books" class="mt-4">No books added yet.</p>
+</div>
+
+<script>
+    $(document).ready(function() {
+        function fetchBooks(query) {
+            $.ajax({
+                url: "{{ url_for('search') }}",
+                type: "GET",
+                data: { query: query },
+                success: function(response) {
+                    $('#book-list').empty();
+                    if (response.length > 0) {
+                        $('#no-books').hide();
+                        response.forEach(function(book) {
+                            $('#book-list').append(`
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    ${book.title} by ${book.author}
+                                    <div>
+                                        <a href="/update/${book.id}" class="btn btn-sm btn-warning">Edit</a>
+                                        <a href="/delete/${book.id}" class="btn btn-sm btn-danger">Delete</a>
+                                    </div>
+                                </li>
+                            `);
+                        });
+                    } else {
+                        $('#no-books').show();
+                    }
+                }
+            });
+        }
+
+        $('#search').on('input', function() {
+            let query = $(this).val();
+            fetchBooks(query);
+        });
+
+        // Trigger a search on page load to populate the list
+        fetchBooks('');
+    });
+</script>
+</body>
+</html>
