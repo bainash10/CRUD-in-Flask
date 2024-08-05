@@ -47,11 +47,11 @@ To run this project locally, follow these steps:
 
 ### Adding a New Book
 
-![Add Book Form](./images/1.png)
+![Add Book Form](1.png)
 
 ### Editing a book
 
-![Book List](./images/2.png)
+![Book List](2.png)
 
 
 
